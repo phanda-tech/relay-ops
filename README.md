@@ -2,51 +2,69 @@
 
 Equipment monitoring and incident management demonstration by Phanda Tech.
 
-## Status
+## Purpose
 
-First implementation slice: an in-memory TypeScript alert engine and nine automated test cases. No UI, API, database, simulator process, authentication, or live hardware integration exists yet. CI is configured, but its result must be checked before claiming verification. No deployment is configured.
+A fictional pump-and-water-level scenario demonstrates how equipment readings can become an actionable incident with recorded supporting evidence. This is a GitHub portfolio project, not a deployed industrial product or certified safety system.
 
-## Run checks
+## Try the local visual demo
 
-Use Node.js 22.
+Use Node.js 22. From the repository root:
 
 ```sh
 npm install
-npm run build
+npm run dev
+```
+
+Open the loopback address printed by Vite. No database, credentials, API keys, or environment variables are needed for the browser demo. Nothing is hosted publicly by these commands.
+
+1. Click Start scenario, or advance manually with Next reading.
+2. Each reading advances the fictional clock by ten seconds.
+3. At 00:30 the pump stops and water exceeds the threshold.
+4. At 01:00 sustained abnormal readings open an incident.
+5. Enter a fictional resolution note and resolve it as the demo operator.
+6. Inspect the session activity and incident list. Pause/reset to repeat.
+
+The script recovers telemetry at 01:30 and repeats every two simulated minutes. Resolving does not control machinery or alter the script; continued abnormal readings can open another incident after a full rule duration.
+
+## Two explicit execution paths
+
+### Browser showcase
+
+React dashboard → deterministic fictional readings → existing TypeScript AlertEngine → in-memory incidents and session activity.
+
+This mode is intentionally easy to run. Demo identity is visibly labelled and is not authentication. Reloading clears all state. The trend retains 36 readings, the incident list retains 30 incidents, and activity retains 60 events; internal engine event-ID tracking remains unbounded during a session.
+
+### Separately tested PostgreSQL backend
+
+StoredPermissionTelemetry → guarded PostgreSQL functions → readings, rule state, memberships, equipment scopes, assignments, incidents, and activity.
+
+Database migrations, transactional duplicate handling, permission checks, and restricted-login integration tests are included. The browser does NOT call this backend. Verified identities, API routes, read endpoints, and a connected full-stack UI are unfinished. Do not represent the visual demo as proof of a connected database workflow.
+
+## Checks
+
+```sh
+npm run build:demo
 npm test
 ```
 
-The build script currently performs type-checking only. A reviewed dependency lockfile is still needed; CI uses npm install until it is committed.
+The demo build type-checks the project and bundles the interface into dist/demo. Existing database workflows exercise separate disposable PostgreSQL services. Integration tests require RELAY_TEST_DATABASE_URL and skip without it; the dedicated CI workflow requires that setting. For database setup and its caveats, see docs/adapter.md, docs/runtime-access.md, and docs/restricted-login-tests.md. Never use customer or production databases for these tests.
 
-## Implemented rule
+Three new scenario test cases check deterministic readings, normal/fault/recovery stages, and the expected first incident time. Existing workflow success reports predate this UI commit. Confirm all four workflows for the new commit before claiming its checks passed. A passing build does not establish browser accessibility, responsive layout, or visual correctness.
 
-A pump-stopped reading at or above 80% water level begins a timer. Consecutive abnormal readings spanning 30 seconds create one open incident, provided no interval exceeds 15 seconds. A normal reading or larger gap resets the timer. Only one incident remains open per organisation/asset pair. Resolution resets the timer; continued abnormal readings may create a new incident after another full duration. These are arbitrary demonstration thresholds, not operational safety guidance.
+## Showcase completion checklist
 
-The engine validates basic reading fields, rejects out-of-order timestamps, ignores repeated event IDs per organisation/asset, and returns copies of incident data. Duplicate IDs are treated as replays, even if payloads differ; payload conflict detection remains future work. Timestamp units are epoch milliseconds. The engine does not yet enforce clock-skew or future-timestamp limits.
+- [ ] Confirm all four workflows pass after the dashboard commit.
+- [ ] Run the visual demo in a browser and test pause, manual stepping, reset, resolution, and long notes.
+- [ ] Check mobile layout and keyboard navigation.
+- [ ] Capture actual screenshots of the interface, including an open incident and its resolution history.
+- [ ] Add the intended MIT license file with confirmed copyright details.
+- [ ] Generate/review a dependency lockfile and review dependency advisories/licenses.
+- [ ] Review code and commit history for secrets/private information before a separately approved visibility change.
 
-Tests cover sustained thresholds, duplicates, ordering, gaps, recovery, separate state keys, invalid input/configuration, resolution/reopening, and defensive copies. Separate state keys are not a substitute for authenticated tenant isolation.
+No screenshots are included yet because this interface has not been browser-verified.
 
-## Planned end-to-end workflow
+## Scope and limitations
 
-1. A deterministic simulator sends fictional pump and water-level readings.
-2. An authenticated API validates and stores readings in PostgreSQL.
-3. Transactional rule evaluation creates incidents without duplicates.
-4. A React dashboard receives live updates.
-5. Operators acknowledge and assign incidents; technicians record actions and resolve them.
-6. An append-only activity history records actor, action, time, and supporting evidence.
+No live hardware, real client data, deployment, real operator authentication, or production-readiness claim. Thresholds are arbitrary demonstration values, not operational guidance. Session activity is editable/resettable demo memory, not a durable audit log. PostgreSQL activity protections have documented owner-level limitations.
 
-## Engineering roadmap
-
-- PostgreSQL schema, migrations, durable idempotency, and transactional concurrency tests.
-- Authentication, role permissions, tenant-scoped queries, and negative access tests.
-- API, simulator, real-time delivery, reconnection, and historical queries.
-- Dashboard, incident workflow, audit history, accessibility, and browser tests.
-- Docker Compose local setup, dependency review, screenshots, and publication review.
-
-## Limitations
-
-All state is process-local and lost on restart. Event-ID sets grow without a retention policy. There is no durable audit trail, authorization, concurrency protection across processes, rate limiting, or production observability. This is a staged portfolio project, not a certified industrial monitoring, alarm, or machinery-control system. Use fictional data only.
-
-## Licensing
-
-An MIT license is intended for the showcase; the license file has not been added in this slice. Third-party dependencies retain their own terms.
+Existing backend/security components remain available as engineering examples; further production hardening is deferred in favour of finishing the bounded showcase. Project-specific details and historical milestones are in docs/. A dependency lockfile is still outstanding. An MIT license is intended but its file has not yet been added to Relay Ops.
