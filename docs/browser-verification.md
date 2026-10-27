@@ -2,7 +2,7 @@
 
 ## Desktop smoke test — 27 October 2026
 
-The project owner reported testing the local Relay Ops browser demo from desktop VS Code. These are user-reported manual results, not tests independently executed by the documentation author. The exact browser, operating system, viewport dimensions, and tested commit were not recorded.
+The project owner reported testing the local Relay Ops browser demo from desktop VS Code. These are owner-reported manual results, not tests independently executed by the documentation author. The exact browser, desktop operating system, viewport dimensions, and tested commit were not recorded.
 
 | Check | Reported result |
 | --- | --- |
@@ -15,24 +15,35 @@ The project owner reported testing the local Relay Ops browser demo from desktop
 | Keyboard navigation | Passed |
 | Narrow desktop browser window | Passed |
 
-This record supplements the earlier README smoke-test summary with the subsequently reported long-note, keyboard, and narrow-window results. These checks are not a comprehensive accessibility audit or evidence of production readiness. A narrow desktop window does not establish actual mobile-device compatibility.
+These checks are not a comprehensive accessibility audit or evidence of production readiness. A narrow desktop window does not establish actual mobile-device compatibility.
+
+## Screenshot evidence and owner review — 27 October 2026
+
+The owner supplied screenshots, which are committed and linked from the README:
+
+- [Normal operation](screenshots/normal-operation.png)
+- [Open incident](screenshots/open-incident.png)
+- [Resolved incident](screenshots/resolved-incident.png)
+
+The owner manually reviewed the images locally and reported:
+
+| Check | Reported result |
+| --- | --- |
+| Normal operation screenshot | Passed |
+| Open incident screenshot | Passed |
+| Resolved status | Passed |
+| Resolution note and corresponding activity visible | Yes |
+| Unwanted personal or private details | None found by owner |
+
+This is owner verification, not independent visual inspection or automated image analysis.
 
 ## Remaining evidence
 
+- [x] Add the three screenshot files and link them from the README.
+- [x] Receive owner confirmation of scenario states, resolution-note/activity evidence, and screenshot privacy review.
 - [ ] Test on an actual mobile device.
-- [ ] Capture normal operation with readings and trend visible.
-- [ ] Capture an open incident with abnormal readings and incident details.
-- [ ] Capture a resolved incident with its fictional note and session activity visible.
-- [ ] Add the actual screenshots to the repository and link them from the README.
-
-Suggested screenshot paths, not yet created:
-
-- `docs/screenshots/normal-operation.png`
-- `docs/screenshots/open-incident.png`
-- `docs/screenshots/resolved-incident.png`
-
-Use only fictional demo data and exclude unrelated personal information or credentials from captures. Do not add image links until the corresponding files exist.
+- [ ] Independently inspect screenshot contents.
 
 ## Scope
 
-The browser demo uses fictional telemetry and in-memory incidents and activity. These checks do not verify browser-to-PostgreSQL connectivity, real operator authentication, live equipment control, or durable audit logging. No screenshot evidence is included in this record.
+The browser demo uses fictional telemetry and in-memory incidents and activity. These checks do not verify browser-to-PostgreSQL connectivity, real operator authentication, live equipment control, durable audit logging, or comprehensive accessibility. No deployment or visibility change is authorized by this record.
