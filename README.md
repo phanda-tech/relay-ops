@@ -6,6 +6,22 @@ Equipment monitoring and incident management demonstration by Phanda Tech.
 
 A fictional pump-and-water-level scenario demonstrates how equipment readings can become an actionable incident with recorded supporting evidence. This is a GitHub portfolio project, not a deployed industrial product or certified safety system.
 
+## Dashboard screenshots
+
+The project owner supplied these screenshots of the fictional browser demo. They illustrate the in-memory showcase, not a connected PostgreSQL workflow.
+
+### Normal operation
+
+![Normal operation in the fictional Relay Ops demo](docs/screenshots/normal-operation.png)
+
+### Open incident
+
+![Open incident in the fictional Relay Ops demo](docs/screenshots/open-incident.png)
+
+### Resolved incident
+
+![Resolved incident in the fictional Relay Ops demo](docs/screenshots/resolved-incident.png)
+
 ## Try the local visual demo
 
 Use Node.js 22. From the repository root:
@@ -60,21 +76,24 @@ The project owner reported running the local demo from desktop VS Code and confi
 - Pause worked.
 - Next reading worked.
 - Reset worked.
+- Long resolution notes worked.
+- Keyboard navigation worked.
+- The narrow desktop browser layout passed the manual check.
 
-These are user-reported manual results. The exact browser, operating system, and tested commit were not recorded. Long-note handling, narrow-screen/mobile layout, and keyboard navigation remain unverified. Screenshots have not yet been added. This test does not verify a browser-to-PostgreSQL workflow.
+These are user-reported manual results. The exact browser, operating system, viewport dimensions, and tested commit were not recorded. Actual mobile-device testing remains pending; a narrow desktop window is not a phone test. These checks are not a comprehensive accessibility audit and do not verify a browser-to-PostgreSQL workflow. See [the desktop verification record](docs/browser-verification.md) for the original test record. Screenshot files have since been added and are linked above; their existence was verified, but their contents have not been independently visually reviewed.
 
 ## Showcase completion checklist
 
 - [x] Receive the project owner's report that all CI checks passed after the test-discovery fix.
 - [x] Receive the project owner's desktop browser confirmation of the scenario, pause, manual stepping, reset, and incident resolution with a note.
-- [ ] Test long resolution notes.
-- [ ] Check mobile layout and keyboard navigation.
-- [ ] Capture actual screenshots of the interface, including an open incident and its resolution history.
+- [x] Receive the project owner's confirmation that long resolution notes passed.
+- [x] Receive the project owner's confirmation that keyboard navigation and narrow desktop layout passed.
+- [x] Add the project owner's normal-operation, open-incident, and resolved-incident screenshot files and link them above.
+- [ ] Test on an actual mobile device.
+- [ ] Independently review screenshot contents and confirm the resolved-incident capture includes the intended note/activity evidence.
 - [ ] Add the intended MIT license file with confirmed copyright details.
 - [ ] Generate/review a dependency lockfile and review dependency advisories/licenses.
 - [ ] Review code and commit history for secrets/private information before a separately approved visibility change.
-
-No screenshots are included yet; desktop browser smoke-test results are recorded above as reported by the project owner.
 
 ## Scope and limitations
 
