@@ -1,0 +1,47 @@
+name: Database persistence checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: relay_test
+          POSTGRES_USER: relay_test
+          POSTGRES_PASSWORD: ephemeral-ci-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGUSER: relay_test
+      PGPASSWORD: ephemeral-ci-only
+      PGDATABASE: relay_test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply initial migration to fresh database
+        run: psql -v ON_ERROR_STOP=1 -f db/migrations/001_persistence.sql
+      - name: Test transactional ingestion and resolution
+        run: psql -v ON_ERROR_STOP=1 -f db/tests/persistence.sql
+      - name: Verify committed records from a new connection
+        run: |
+          psql -v ON_ERROR_STOP=1 <<'SQL'
+          DO $$ BEGIN
+            IF (SELECT count(*) FROM relay.readings) <> 4 THEN RAISE EXCEPTION 'Readings not retained'; END IF;
+            IF (SELECT count(*) FROM relay.incidents WHERE resolved_at IS NOT NULL) <> 1 THEN RAISE EXCEPTION 'Resolved incident not retained'; END IF;
+            IF (SELECT count(*) FROM relay.incident_activity) <> 2 THEN RAISE EXCEPTION 'History not retained'; END IF;
+          END; $$;
+          SQL
