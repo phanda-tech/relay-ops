@@ -1,0 +1,14 @@
+BEGIN;
+CREATE ROLE relay_runtime NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOREPLICATION NOBYPASSRLS;
+REVOKE ALL ON SCHEMA relay FROM PUBLIC,relay_runtime;
+REVOKE ALL ON ALL TABLES IN SCHEMA relay FROM PUBLIC,relay_runtime;
+REVOKE ALL ON ALL SEQUENCES IN SCHEMA relay FROM PUBLIC,relay_runtime;
+REVOKE EXECUTE ON ALL FUNCTIONS IN SCHEMA relay FROM PUBLIC,relay_runtime;
+ALTER FUNCTION relay.ingest_as(text,text,text,text,bigint,numeric,boolean) SECURITY DEFINER;
+ALTER FUNCTION relay.ingest_as(text,text,text,text,bigint,numeric,boolean) SET search_path TO pg_catalog,pg_temp;
+ALTER FUNCTION relay.resolve_as(text,text,text,text) SECURITY DEFINER;
+ALTER FUNCTION relay.resolve_as(text,text,text,text) SET search_path TO pg_catalog,pg_temp;
+GRANT USAGE ON SCHEMA relay TO relay_runtime;
+GRANT EXECUTE ON FUNCTION relay.ingest_as(text,text,text,text,bigint,numeric,boolean) TO relay_runtime;
+GRANT EXECUTE ON FUNCTION relay.resolve_as(text,text,text,text) TO relay_runtime;
+COMMIT;
