@@ -49,19 +49,32 @@ npm test
 
 The demo build type-checks the project and bundles the interface into dist/demo. Existing database workflows exercise separate disposable PostgreSQL services. Integration tests require RELAY_TEST_DATABASE_URL and skip without it; the dedicated CI workflow requires that setting. For database setup and its caveats, see docs/adapter.md, docs/runtime-access.md, and docs/restricted-login-tests.md. Never use customer or production databases for these tests.
 
-Three new scenario test cases check deterministic readings, normal/fault/recovery stages, and the expected first incident time. Existing workflow success reports predate this UI commit. Confirm all four workflows for the new commit before claiming its checks passed. A passing build does not establish browser accessibility, responsive layout, or visual correctness.
+Three new scenario test cases check deterministic readings, normal/fault/recovery stages, and the expected first incident time. Following the test-discovery fix in commit d51189e, the project owner reported that all CI checks passed. This is a user-reported result, not an independently retrieved workflow report. A passing build does not establish browser accessibility, responsive layout, or visual correctness.
+
+### Desktop browser smoke test — 27 October 2026
+
+The project owner reported running the local demo from desktop VS Code and confirmed:
+
+- The simulation behaved as described, including incident creation.
+- An incident could be resolved with a fictional resolution note.
+- Pause worked.
+- Next reading worked.
+- Reset worked.
+
+These are user-reported manual results. The exact browser, operating system, and tested commit were not recorded. Long-note handling, narrow-screen/mobile layout, and keyboard navigation remain unverified. Screenshots have not yet been added. This test does not verify a browser-to-PostgreSQL workflow.
 
 ## Showcase completion checklist
 
-- [ ] Confirm all four workflows pass after the dashboard commit.
-- [ ] Run the visual demo in a browser and test pause, manual stepping, reset, resolution, and long notes.
+- [x] Receive the project owner's report that all CI checks passed after the test-discovery fix.
+- [x] Receive the project owner's desktop browser confirmation of the scenario, pause, manual stepping, reset, and incident resolution with a note.
+- [ ] Test long resolution notes.
 - [ ] Check mobile layout and keyboard navigation.
 - [ ] Capture actual screenshots of the interface, including an open incident and its resolution history.
 - [ ] Add the intended MIT license file with confirmed copyright details.
 - [ ] Generate/review a dependency lockfile and review dependency advisories/licenses.
 - [ ] Review code and commit history for secrets/private information before a separately approved visibility change.
 
-No screenshots are included yet because this interface has not been browser-verified.
+No screenshots are included yet; desktop browser smoke-test results are recorded above as reported by the project owner.
 
 ## Scope and limitations
 
