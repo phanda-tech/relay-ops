@@ -78,7 +78,13 @@ The lockfile inventory contains 135 non-root entries: 129 MIT, 2 Apache-2.0, 3 I
 
 The owner reported successful simulation, incident creation and resolution with a fictional note, pause, manual stepping, reset, long resolution notes, keyboard navigation, and narrow desktop layout. The owner also reviewed all three screenshots and confirmed readable resolved-note/activity evidence and no unwanted private details.
 
-These are owner-reported manual results. Exact browser, desktop operating system, viewport dimensions, and browser-test commit were not recorded. Independent screenshot inspection and actual mobile-device testing remain pending. A narrow desktop window is not a phone test; these checks are not a comprehensive accessibility audit. See [the browser-verification record](docs/browser-verification.md).
+These are owner-reported manual results. Exact browser, desktop operating system, viewport dimensions, and browser-test commit were not recorded. Independent screenshot inspection remains pending. A narrow desktop window alone is not a phone test; these checks are not a comprehensive accessibility audit. See [the browser-verification record](docs/browser-verification.md).
+
+### Actual-device smoke test — 27 October 2026
+
+The owner reported that the manual phone checklist passed on a Samsung S26 Ultra using Samsung Internet over a local-network Vite preview: portrait layout, simulation and incident creation, resolution with fictional note/activity evidence, pause, manual stepping, reset, and landscape rotation and return to portrait. This was not a public deployment.
+
+Chrome on the same phone returned ERR_TOO_MANY_RETRIES; its cause remains undiagnosed and no passing Chrome retest was reported. Exact Android/browser versions, viewport dimensions, and tested commit were not recorded. This is owner-reported evidence for one device/browser, not independently executed testing, universal mobile compatibility, or a comprehensive accessibility audit. See [the detailed phone-test record](docs/browser-verification.md#actual-device-smoke-test--27-october-2026).
 
 ### Scoped privacy checks — 27 October 2026
 
@@ -102,8 +108,9 @@ It reported 18 commits scanned, approximately 170.54 KB scanned, no leaks found,
 - [x] Record successful owner-run clean installation, build, regular tests, and audit.
 - [x] Preserve browser-runtime license notices and document the scoped dependency review.
 - [x] Replace personal-email metadata in the reviewed main history and record scoped text-history and Gitleaks checks.
+- [x] Record owner-reported actual-device smoke-test pass on Samsung S26 Ultra using Samsung Internet.
+- [ ] Resolve or retest the reported Chrome access failure.
 - [ ] Complete the broader dependency license-compliance review.
-- [ ] Test on an actual mobile device.
 - [ ] Independently inspect screenshot contents.
 - [ ] Resolve remaining privacy-review coverage limitations and separately approve any visibility change.
 

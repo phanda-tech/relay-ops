@@ -78,5 +78,5 @@ The current README summarizes scoped privacy and screenshot results. The owner's
 - Each proposed distribution's third-party contents have not been independently audited. Preserve applicable upstream licenses, copyrights, disclaimers, and notices when redistributing dependencies.
 - Development tools are not automatically part of a browser distribution; lockfile presence alone does not establish bundle inclusion.
 - Repeat relevant checks when versions or distribution formats change.
-- Actual mobile-device testing and independent screenshot inspection remain pending. Privacy checks have explicit coverage limitations in the README.
+- The owner reported an actual-device smoke-test pass on Samsung S26 Ultra using Samsung Internet. Chrome on the same phone returned ERR_TOO_MANY_RETRIES and remains unresolved. These are owner-reported manual results, not universal mobile compatibility. See [the browser-verification record](browser-verification.md). Independent screenshot inspection remains pending. Privacy checks have explicit coverage limitations in the README.
 - No deployment, visibility change, or production-readiness claim is authorized by this record.
